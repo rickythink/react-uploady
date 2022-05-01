@@ -252,4 +252,28 @@ export const WithFullScreen = (): Node => {
     </Uploady>;
 };
 
+export const WithRecursiveFolder = (): Node => {
+    const { enhancer, destination, multiple, grouped, groupSize, extOptions } = useStoryUploadySetup();
+
+    return <Uploady
+        debug
+        multiple={multiple}
+        destination={destination}
+        enhancer={enhancer}
+        grouped={grouped}
+        maxGroupSize={groupSize}
+        fileFilter={({ name }) => !name.includes(".DS_Store")}
+        {...extOptions}
+    >
+        <StyledDropZone
+            id="upload-drop-zone"
+            onDragOverClassName="drag-over"
+            htmlDirContentParams={{ recursive: true, withFullPath: true }}
+        >
+            <div id="drag-text">Drag File(s) Here</div>
+            <div id="drop-text">Drop File(s) Here</div>
+        </StyledDropZone>
+    </Uploady>;
+};
+
 export default (getCsfExport(UploadDropZone, "Upload Drop Zone", readme, { pkg: "upload-drop-zone", section: "UI" }): CsfExport);
